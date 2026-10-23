@@ -1,0 +1,30 @@
+services:
+  backend:
+    build:
+      context: https://github.com/alkasadist/do_lab1_back.git#main
+    image: do_lab1_back:2.0
+    container_name: backend
+    volumes:
+      - ./data:/app/data
+    networks:
+      - app-net
+    restart: always
+
+  frontend:
+    build:
+      context: https://github.com/alkasadist/do_lab1_front.git#main
+    image: do_lab1_front:2.0
+    container_name: frontend
+    environment:
+      BACKEND_URL: http://backend:8000
+    ports:
+      - "5000:5000"
+    networks:
+      - app-net
+    depends_on:
+      - backend
+    restart: always
+
+networks:
+  app-net:
+    driver: bridge
