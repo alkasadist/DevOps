@@ -1,0 +1,20 @@
+- name: Create application directory
+  ansible.builtin.file:
+    path: "{{ app_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Clone frontend, backend and DevOps repositories
+  ansible.builtin.git:
+    repo: "{{ item.url }}"
+    dest: "{{ app_dir }}/{{ item.name }}"
+    version: "{{ app_version }}"
+  loop: "{{ repositories }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Point compose build to cloned repositories
+  ansible.builtin.template:
+    src: docker-compose.override.yml.j2
+    dest: "{{ compose_dir }}/docker-compose.override.yml"
+    mode: "0644"

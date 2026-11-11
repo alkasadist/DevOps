@@ -1,0 +1,15 @@
+app_dir: /opt/app
+app_version: main
+github_user: alkasadist
+
+repositories:
+  - name: do_lab1_back
+    url: "https://github.com/{{ github_user }}/do_lab1_back.git"
+  - name: do_lab1_front
+    url: "https://github.com/{{ github_user }}/do_lab1_front.git"
+  - name: DevOps
+    url: "https://github.com/{{ github_user }}/DevOps.git"
+
+compose_dir: "{{ app_dir }}/DevOps"
+backend_dir: "{{ app_dir }}/do_lab1_back"
+frontend_dir: "{{ app_dir }}/do_lab1_front"

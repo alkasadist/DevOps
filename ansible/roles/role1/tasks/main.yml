@@ -1,0 +1,15 @@
+- name: Install Docker and Docker Compose
+  ansible.builtin.import_tasks: subtasks/install_docker.yml
+  tags: deploy
+
+- name: Clone repositories
+  ansible.builtin.import_tasks: subtasks/clone.yml
+  tags: deploy
+
+- name: Start microservices
+  ansible.builtin.import_tasks: subtasks/start.yml
+  tags: start
+
+- name: Stop microservices
+  ansible.builtin.import_tasks: subtasks/stop.yml
+  tags: [stop, never]

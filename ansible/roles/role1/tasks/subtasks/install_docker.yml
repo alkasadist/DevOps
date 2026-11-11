@@ -1,0 +1,25 @@
+- name: Install Docker, Docker Compose and Git
+  ansible.builtin.apt:
+    name:
+      - docker.io
+      - docker-compose-v2
+      - git
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+  notify: Restart docker
+
+- name: Enable and start Docker service
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Add user to docker group
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: true
+
+- name: Apply handlers
+  ansible.builtin.meta: flush_handlers
